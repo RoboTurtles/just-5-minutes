@@ -42,7 +42,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="view-tasks"
           options={{
-            title: 'View Tasks',
+            title: 'Upcoming',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="chevron.right" color={color} />,
           }}
         />
