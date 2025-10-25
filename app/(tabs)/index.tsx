@@ -1,15 +1,14 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Link } from 'expo-router';
 
-
 export default function HomeScreen() {
   const gradientColors = ['rgba(249, 98, 41, 1)', 'rgba(252, 142, 31, 1)', 'rgba(252, 182, 61, 1)'];
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: gradientColors, dark: gradientColors }}
@@ -26,6 +25,16 @@ export default function HomeScreen() {
         <ThemedText type="defaultSemiBold">What do you want to do today?</ThemedText>
       </ThemedView>
 
+      <Link href="/new-task">
+        <Link.Trigger>
+          <ThemedText>Create a new task</ThemedText>
+        </Link.Trigger>
+      </Link>
+      <Link href="/view-tasks">
+        <Link.Trigger>
+          <ThemedText>View tasks</ThemedText>
+        </Link.Trigger>
+      </Link>
 
 
         {/* <ThemedText>
