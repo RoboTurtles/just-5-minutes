@@ -8,11 +8,22 @@ type Habit = {
   title: string;
   startTime?: string;
   endTime?: string;
+  color?: string;
 };
 
 const DEFAULT_EVENT_DATE = '2025-10-26';
 const DEFAULT_TIMEZONE_OFFSET = '-04:00';
-const DEFAULT_EVENT_COLOR = '#f47d42ff';
+const DEFAULT_EVENT_COLOR = '#FF8A00';
+const DUMMY_EVENT_COLOR = '#ADD8E6';
+
+const DUMMY_TASKS: Array<Required<Pick<Habit, 'title' | 'startTime' | 'endTime'>> & { color: string }> = [
+  { title: 'Sleep', startTime: '00:00', endTime: '06:30', color: DUMMY_EVENT_COLOR },
+  { title: 'Morning Stretch', startTime: '07:00', endTime: '07:30', color: DUMMY_EVENT_COLOR },
+  { title: 'Daily Standup', startTime: '08:00', endTime: '08:30', color: DUMMY_EVENT_COLOR },
+  { title: 'Lunch Break', startTime: '12:00', endTime: '12:45', color: DUMMY_EVENT_COLOR },
+  { title: 'Client Meeting', startTime: '13:30', endTime: '14:30', color: DUMMY_EVENT_COLOR },
+  { title: 'Evening Wind Down', startTime: '21:00', endTime: '22:00', color: DUMMY_EVENT_COLOR },
+];
 
 const normalizeTime = (time?: string) => {
   if (!time) return '00:00:00';
@@ -94,37 +105,38 @@ const Calendar = ({ habits = [] }: { habits?: Habit[] }) => {
       },
       eventContainerStyle: {
         borderRadius: 12,
-        borderWidth: 1,
-        borderColor: highlight,
-        backgroundColor:
-          colorScheme === 'dark' ? 'rgba(10, 56, 86, 0.32)' : 'rgba(2, 48, 71, 0.18)',
+        borderWidth: 0,
         padding: 8,
       },
       eventTitleStyle: {
         fontSize: 13,
         fontWeight: '700',
+        color: palette.text,
       },
       nowIndicatorColor: highlight,
     };
   }, [colorScheme, palette]);
 
+  const combinedHabits = useMemo(() => [...habits, ...DUMMY_TASKS], [habits]);
+
   const events = useMemo(
     () =>
-      habits.map((habit, index) => {
+      combinedHabits.map((habit, index) => {
         const title = habit.title ?? 'Untitled Habit';
         const slug = title.toLowerCase().replace(/\s+/g, '-') || `habit-${index}`;
         const startTime = normalizeTime(habit.startTime);
         const endTime = normalizeTime(habit.endTime ?? habit.startTime);
+        const color = habit.color ?? DEFAULT_EVENT_COLOR;
 
         return {
           id: `${slug}-${startTime}-${index}`,
           title,
           start: { dateTime: `${DEFAULT_EVENT_DATE}T${startTime}${DEFAULT_TIMEZONE_OFFSET}` },
           end: { dateTime: `${DEFAULT_EVENT_DATE}T${endTime}${DEFAULT_TIMEZONE_OFFSET}` },
-          color: DEFAULT_EVENT_COLOR,
+          color,
         };
       }),
-    [habits],
+    [combinedHabits],
   );
 
   return (
@@ -132,7 +144,7 @@ const Calendar = ({ habits = [] }: { habits?: Habit[] }) => {
       <CalendarHeader />
       <CalendarBody />
     </CalendarContainer>
-  );
+  )
 };
 
 export default Calendar;
