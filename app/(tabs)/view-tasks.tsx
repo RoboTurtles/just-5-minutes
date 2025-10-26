@@ -1,8 +1,9 @@
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { Image } from 'expo-image';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
+import TaskTile from "@/components/task-tile";
 import { useUserDataContext } from "../task-context";
 
 export default function ViewTasks() {
@@ -23,10 +24,7 @@ export default function ViewTasks() {
       <ThemedText style={styles.title}>Your Upcoming Tasks</ThemedText>
       {userData.taskList.map((task, idx) => {
         return (
-          <View key={idx}>
-            <ThemedText>{task.title}</ThemedText>
-            <ThemedText>{task.description}</ThemedText>
-          </View>
+          <TaskTile key={idx} idx={idx} title={task.title} description={task.description} />
         )
       })}
     </ParallaxScrollView>
