@@ -22,7 +22,10 @@ export default function HomeScreen() {
 
   const { userData } = useUserDataContext();
 
-  async function scheduleHabits() { // call backend to assign times to tasks
+  async function scheduleHabits() { // call backend to assign times to habits
+    if (userData.taskList.length == 0) {
+      return;
+    }
     try {
       const response = await fetch("http://100.66.218.68:5000/gemini-response", {
         method: "POST",
