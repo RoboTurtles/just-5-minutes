@@ -5,6 +5,7 @@ import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { CalendarDaysIcon, PencilSquareIcon } from 'react-native-heroicons/solid';
 import { UserDataProvider } from '../task-context';
 
 export default function TabLayout() {
@@ -28,7 +29,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="explore"
           options={{
-            title: 'Explore',
+            title: 'Discoverer',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
           }}
         />
@@ -36,14 +37,14 @@ export default function TabLayout() {
           name="new-task"
           options={{
             title: 'New Task',
-            tabBarIcon: ({ color }) => <IconSymbol size={28} name="chevron.right" color={color} />,
+            tabBarIcon: ({ color }) => <PencilSquareIcon color={color} width={28} height={28} />,
           }}
         />
         <Tabs.Screen
           name="view-tasks"
           options={{
             title: 'Upcoming',
-            tabBarIcon: ({ color }) => <IconSymbol size={28} name="chevron.right" color={color} />,
+            tabBarIcon: ({ color }) => <CalendarDaysIcon color={color} width={28} height={28} />,
           }}
         />
       </Tabs>

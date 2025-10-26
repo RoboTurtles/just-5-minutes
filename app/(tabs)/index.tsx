@@ -93,7 +93,7 @@ export default function HomeScreen() {
             end={{ x: 1, y: 1 }}
             style={[styles.actionButtonGradient, styles.actionButtonBorder]}>
             <ThemedText onPress={scheduleHabits} type="defaultSemiBold" style={styles.actionButtonSecondaryText}>
-              Schedule
+              Reschedule Time
             </ThemedText>
           </LinearGradient>
         </Pressable>
