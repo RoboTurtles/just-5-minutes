@@ -63,10 +63,26 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Good morning!</ThemedText>
+        <Pressable 
+          onTouchStart={() => {
+            if (!parentScrollEnabled) {
+              setParentScrollEnabled(true);
+            }
+          }}
+        >
+          <ThemedText type="title">Good morning!</ThemedText>
+        </Pressable>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="defaultSemiBold">What do you want to do today?</ThemedText>
+        <Pressable 
+          onTouchStart={() => {
+            if (!parentScrollEnabled) {
+              setParentScrollEnabled(true);
+            }
+          }}
+        >
+          <ThemedText type="defaultSemiBold">What do you want to do today?</ThemedText>
+        </Pressable>
       </ThemedView>
 
       <View style={styles.actionRow}>
@@ -75,6 +91,11 @@ export default function HomeScreen() {
             styles.actionButtonPressable,
             { transform: [{ scale: pressed ? 0.97 : 1 }] },
           ]}
+          onTouchStart={() => {
+            if (!parentScrollEnabled) {
+              setParentScrollEnabled(true);
+            }
+          }}
           onPress={() => router.push('/new-task')}>
           <LinearGradient
             colors={gradientColors}
@@ -92,6 +113,11 @@ export default function HomeScreen() {
             styles.actionButtonPressable,
             { transform: [{ scale: pressed ? 0.97 : 1 }] },
           ]}
+          onTouchStart={() => {
+            if (!parentScrollEnabled) {
+              setParentScrollEnabled(true);
+            }
+          }}
           onPress={() => router.push('/view-tasks')}>
           <LinearGradient
             colors={[...gradientColors].reverse()}
@@ -105,10 +131,34 @@ export default function HomeScreen() {
         </Pressable>
       </View>
 
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="title">Daily Schedule</ThemedText>
-      <View style={styles.calendarWrapper}>
-        <Calendar habits={scheduledHabitsList} onInteractStart={() => setParentScrollEnabled(false)} onInteractEnd={() => {setParentScrollEnabled(true)}}/>
+      <ThemedView 
+        style={styles.stepContainer}
+        onStartShouldSetResponder={() => {
+          // Re-enable scroll when tapping outside calendar
+          if (!parentScrollEnabled) {
+            setParentScrollEnabled(true);
+          }
+          return false;
+        }}
+      >
+        <Pressable 
+          onTouchStart={() => {
+            if (!parentScrollEnabled) {
+              setParentScrollEnabled(true);
+            }
+          }}
+        >
+          <ThemedText type="title">Daily Schedule</ThemedText>
+        </Pressable>
+      <View 
+        style={styles.calendarWrapper}
+        onStartShouldSetResponderCapture={() => {
+          // Disable scroll when touching calendar area
+          setParentScrollEnabled(false);
+          return false; // Don't capture, let calendar handle it
+        }}
+      >
+        <Calendar habits={scheduledHabitsList} onInteractStart={() => setParentScrollEnabled(false)} onInteractEnd={() => {}}/>
       </View>
       <ThemedText type="link" style={{ marginTop: 12 }}>Events gathered from Google Calendar</ThemedText>
       </ThemedView>
