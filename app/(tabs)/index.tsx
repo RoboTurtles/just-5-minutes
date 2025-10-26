@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import Calendar from '@/components/calendar';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
@@ -20,6 +20,7 @@ export default function HomeScreen() {
   const palette = Colors[colorScheme];
   const [scheduledHabitsList, setScheduledHabitsList] = useState([]);
   const [parentScrollEnabled, setParentScrollEnabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { userData } = useUserDataContext();
 
@@ -28,6 +29,7 @@ export default function HomeScreen() {
       return;
     }
     try {
+      setIsLoading(true);
       const response = await fetch("http://100.66.218.68:8021/schedule-habits", {
         method: "POST",
         headers: {
@@ -47,8 +49,10 @@ export default function HomeScreen() {
       } else {
         console.log("Error occurred on scheduleTask: ", data.error);
       }
+      setIsLoading(false);
     } catch (err) {
       console.log("Error occurred on scheduleTask: ", err);
+      setIsLoading(false);
     }
   }
 
@@ -130,6 +134,9 @@ export default function HomeScreen() {
           </LinearGradient>
         </Pressable>
       </View>
+      {isLoading && (
+        <ActivityIndicator size="small" color="#FC8E1F" style={{ marginLeft: 10, alignSelf: 'center' }} />
+      )}
 
       <ThemedView 
         style={styles.stepContainer}
