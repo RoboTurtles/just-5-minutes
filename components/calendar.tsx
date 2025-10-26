@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { View } from 'react-native';
 
 type Habit = {
   title: string;
@@ -30,7 +31,7 @@ const normalizeTime = (time?: string) => {
   return /^\d{2}:\d{2}$/.test(time) ? `${time}:00` : time;
 };
 
-const Calendar = ({ habits = [] }: { habits?: Habit[] }) => {
+const Calendar = ({ habits = [], onInteractStart, onInteractEnd }: { habits?: Habit[], onInteractStart?: () => void, onInteractEnd: () => void }) => {
   const colorScheme = useColorScheme() ?? 'light';
   const palette = Colors[colorScheme];
 
@@ -140,10 +141,12 @@ const Calendar = ({ habits = [] }: { habits?: Habit[] }) => {
   );
 
   return (
-    <CalendarContainer theme={calendarTheme} numberOfDays={1} events={events}>
-      <CalendarHeader />
-      <CalendarBody />
-    </CalendarContainer>
+    <View style={{ flex: 1, minHeight: '100%' }} onTouchStart={onInteractStart} onTouchEnd={onInteractEnd} onTouchCancel={onInteractEnd}>
+      <CalendarContainer theme={calendarTheme} numberOfDays={1} events={events}>
+        <CalendarHeader />
+        <CalendarBody />
+      </CalendarContainer>
+    </View>
   )
 };
 

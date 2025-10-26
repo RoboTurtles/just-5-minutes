@@ -19,6 +19,7 @@ export default function HomeScreen() {
   const colorScheme = useColorScheme() ?? 'light';
   const palette = Colors[colorScheme];
   const [scheduledHabitsList, setScheduledHabitsList] = useState([]);
+  const [parentScrollEnabled, setParentScrollEnabled] = useState(true);
 
   const { userData } = useUserDataContext();
 
@@ -53,6 +54,7 @@ export default function HomeScreen() {
 
   return (
     <ParallaxScrollView
+      scrollEnabled={parentScrollEnabled}
       headerBackgroundColor={{ light: gradientColors, dark: gradientColors }}
       headerImage={
         <Image
@@ -106,7 +108,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="title">Daily Schedule</ThemedText>
       <View style={styles.calendarWrapper}>
-        <Calendar habits={scheduledHabitsList} />
+        <Calendar habits={scheduledHabitsList} onInteractStart={() => setParentScrollEnabled(false)} onInteractEnd={() => {setParentScrollEnabled(true)}}/>
       </View>
       <ThemedText type="link" style={{ marginTop: 12 }}>Events gathered from Google Calendar</ThemedText>
       </ThemedView>
