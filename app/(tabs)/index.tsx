@@ -27,7 +27,7 @@ export default function HomeScreen() {
       return;
     }
     try {
-      const response = await fetch("http://100.66.218.68:5000/gemini-response", {
+      const response = await fetch("http://100.66.218.68:8021/gemini-response", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
