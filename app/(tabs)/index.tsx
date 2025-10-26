@@ -103,7 +103,7 @@ export default function HomeScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.actionButtonGradient}>
             <ThemedText type="defaultSemiBold" style={styles.actionButtonPrimaryText}>
-              Create a new task
+              Create a new habit
             </ThemedText>
           </LinearGradient>
         </Pressable>
