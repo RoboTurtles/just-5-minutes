@@ -36,7 +36,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="new-task"
           options={{
-            title: 'New Task',
+            title: 'New Habit',
             tabBarIcon: ({ color }) => <PencilSquareIcon color={color} width={28} height={28} />,
           }}
         />
