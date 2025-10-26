@@ -27,7 +27,7 @@ export default function HomeScreen() {
       return;
     }
     try {
-      const response = await fetch("http://100.66.218.68:8021/gemini-response", {
+      const response = await fetch("http://100.66.218.68:8021/schedule-habits", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -37,13 +37,17 @@ export default function HomeScreen() {
 
       const data = await response.json();
 
-      const jsonData = JSON.parse(data.data);
+      if (data.status == 200) {
+        const jsonData = JSON.parse(data.data);
 
-      setScheduledHabitsList(jsonData);
+        setScheduledHabitsList(jsonData);
 
-      console.log(jsonData);
+        console.log(jsonData);
+      } else {
+        console.log("Error occurred on scheduleTask: ", data.error);
+      }
     } catch (err) {
-      console.log("Error occured on scheduleTask: ", err);
+      console.log("Error occurred on scheduleTask: ", err);
     }
   }
 
