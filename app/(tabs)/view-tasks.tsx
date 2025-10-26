@@ -20,7 +20,7 @@ export default function ViewTasks() {
         />
       }
     >
-      <ThemedText>Your Tasks</ThemedText>
+      <ThemedText style={styles.title}>Your Upcoming Tasks</ThemedText>
       {userData.taskList.map((task, idx) => {
         return (
           <View key={idx}>
@@ -34,6 +34,11 @@ export default function ViewTasks() {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
   reactLogo: {
     height: 178,
     width: 290,
