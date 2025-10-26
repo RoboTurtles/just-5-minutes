@@ -99,7 +99,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="title">Schedule for Today</ThemedText>
       <View style={styles.calendarWrapper}>
-        <Calendar />
+        <Calendar habits={[{"endTime": "09:30", "startTime": "09:00", "title": "find a job"}, {"endTime": "10:35", "startTime": "10:05", "title": "do calc homework"}]} />
       </View>
       </ThemedView>
     </ParallaxScrollView>

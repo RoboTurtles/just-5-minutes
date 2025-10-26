@@ -4,7 +4,22 @@ import React, { useMemo } from 'react';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
-const Calendar = () => {
+type Habit = {
+  title: string;
+  startTime?: string;
+  endTime?: string;
+};
+
+const DEFAULT_EVENT_DATE = '2025-10-26';
+const DEFAULT_TIMEZONE_OFFSET = '-04:00';
+const DEFAULT_EVENT_COLOR = '#f47d42ff';
+
+const normalizeTime = (time?: string) => {
+  if (!time) return '00:00:00';
+  return /^\d{2}:\d{2}$/.test(time) ? `${time}:00` : time;
+};
+
+const Calendar = ({ habits = [] }: { habits?: Habit[] }) => {
   const colorScheme = useColorScheme() ?? 'light';
   const palette = Colors[colorScheme];
 
@@ -88,14 +103,32 @@ const Calendar = () => {
       eventTitleStyle: {
         fontSize: 13,
         fontWeight: '700',
-        color: palette.text,
       },
       nowIndicatorColor: highlight,
     };
   }, [colorScheme, palette]);
 
+  const events = useMemo(
+    () =>
+      habits.map((habit, index) => {
+        const title = habit.title ?? 'Untitled Habit';
+        const slug = title.toLowerCase().replace(/\s+/g, '-') || `habit-${index}`;
+        const startTime = normalizeTime(habit.startTime);
+        const endTime = normalizeTime(habit.endTime ?? habit.startTime);
+
+        return {
+          id: `${slug}-${startTime}-${index}`,
+          title,
+          start: { dateTime: `${DEFAULT_EVENT_DATE}T${startTime}${DEFAULT_TIMEZONE_OFFSET}` },
+          end: { dateTime: `${DEFAULT_EVENT_DATE}T${endTime}${DEFAULT_TIMEZONE_OFFSET}` },
+          color: DEFAULT_EVENT_COLOR,
+        };
+      }),
+    [habits],
+  );
+
   return (
-    <CalendarContainer theme={calendarTheme} numberOfDays={1}>
+    <CalendarContainer theme={calendarTheme} numberOfDays={1} events={events}>
       <CalendarHeader />
       <CalendarBody />
     </CalendarContainer>

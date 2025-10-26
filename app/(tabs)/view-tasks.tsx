@@ -20,7 +20,7 @@ export default function ViewTasks() {
         />
       }
     >
-      <ThemedText style={styles.title}>Your Upcoming Tasks</ThemedText>
+      <ThemedText style={styles.title}>Manage Habits</ThemedText>
       {userData.taskList.map((task, idx) => {
         return (
           <View key={idx}>
