@@ -77,8 +77,11 @@ export default function TabTwoScreen() {
           </ThemedText>
         </ThemedView>
         <ThemedText>Talk to Discoverer about new insights, trends, help, and more! ✨</ThemedText>
-        <View style={styles.inputWrapper}>
+        <ThemedText style={styles.discovererOutputLabel}>Output:</ThemedText>
+        <View style={styles.outputWrapper}>
           <ThemedText>{geminiOutput}</ThemedText>
+        </View>
+        <View style={styles.inputWrapper}>
           <TextInput
             style={[
               styles.progressInput,
@@ -94,8 +97,8 @@ export default function TabTwoScreen() {
             value={progressNote}
             onChangeText={setProgressNote}
           />
-          <Button title="Send" onPress={getGeminiResponse}/>
         </View>
+        <Button title="Send" onPress={getGeminiResponse}/>
       </ParallaxScrollView>
     </LinearGradient>
   );
@@ -130,10 +133,24 @@ const styles = StyleSheet.create({
     padding: 16,
     minHeight: 160,
     textAlignVertical: 'top',
+    borderColor: 'white',
+    fontSize: 14
   },
   reactLogo: {
     position: 'absolute',
     bottom: -25,
     left: 30,
   },
+  outputWrapper: {
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 16,
+    borderColor: 'white'
+  },
+  discovererOutputLabel: {
+    fontWeight: 600,
+    fontSize: 18,
+    padding: 0,
+    margin: 0
+  }
 });
