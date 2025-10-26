@@ -1,3 +1,6 @@
+# This is a project built for NewHacks 2025! 
+We ended up using two GitHub repos for this; please find our backend code [here](https://github.com/yisiliu2005/just-5-minutes-backend).
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
