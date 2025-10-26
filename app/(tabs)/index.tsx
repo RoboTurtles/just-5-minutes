@@ -10,11 +10,39 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRouter } from 'expo-router';
 
+import { useState } from 'react';
+import { useUserDataContext } from "../task-context";
+
 export default function HomeScreen() {
   const gradientColors = ['rgba(249, 98, 41, 1)', 'rgba(252, 142, 31, 1)', 'rgba(252, 182, 61, 1)'];
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const palette = Colors[colorScheme];
+  const [scheduledHabitsList, setScheduledHabitsList] = useState([]);
+
+  const { userData } = useUserDataContext();
+
+  async function scheduleHabits() { // call backend to assign times to tasks
+    try {
+      const response = await fetch("http://100.66.218.68:5000/gemini-response", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData.taskList)
+      });
+
+      const data = await response.json();
+
+      const jsonData = JSON.parse(data.data);
+
+      setScheduledHabitsList(jsonData);
+
+      console.log(jsonData);
+    } catch (err) {
+      console.log("Error occured on scheduleTask: ", err);
+    }
+  }
 
   return (
     <ParallaxScrollView
@@ -61,8 +89,8 @@ export default function HomeScreen() {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={[styles.actionButtonGradient, styles.actionButtonBorder]}>
-            <ThemedText type="defaultSemiBold" style={styles.actionButtonSecondaryText}>
-              View upcoming tasks
+            <ThemedText onPress={scheduleHabits} type="defaultSemiBold" style={styles.actionButtonSecondaryText}>
+              Schedule
             </ThemedText>
           </LinearGradient>
         </Pressable>
