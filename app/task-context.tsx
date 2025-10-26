@@ -10,8 +10,8 @@ type UserDataContextType = {
 
 const defaultUserData: UserData = {
   taskList: [
-    {"title": "find a job", "description": "i need a job"},
-    {"title": "do calc homework", "description": "focus on studying derivatives"}
+    {"title": "Find a job", "description": "I need a job"},
+    {"title": "Do calc homework", "description": "Focus on studying derivatives"}
   ],
   mostRecentCompletionDateTime: null,
   streakDuration: 0
