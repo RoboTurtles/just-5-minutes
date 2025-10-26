@@ -22,7 +22,7 @@ export default function TabTwoScreen() {
       return;
     }
     try {
-      const response = await fetch("http://100.66.218.68:8021/gemini-response", {
+      const response = await fetch("http://100.66.223.148:8021/gemini-response", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -77,9 +77,11 @@ export default function TabTwoScreen() {
           </ThemedText>
         </ThemedView>
         <ThemedText>Talk to Discoverer about new insights, trends, help, and more! ✨</ThemedText>
-        <ThemedText style={styles.discovererOutputLabel}>Output:</ThemedText>
-        <View style={styles.outputWrapper}>
-          <ThemedText>{geminiOutput}</ThemedText>
+        <View>
+          <ThemedText style={styles.discovererOutputLabel}>Output:</ThemedText>
+          <View style={styles.outputWrapper}>
+            <ThemedText>{geminiOutput}</ThemedText>
+          </View>
         </View>
         <View style={styles.inputWrapper}>
           <TextInput

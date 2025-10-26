@@ -30,7 +30,7 @@ export default function HomeScreen() {
     }
     try {
       setIsLoading(true);
-      const response = await fetch("http://100.66.218.68:8021/schedule-habits", {
+      const response = await fetch("http://100.66.223.148:8021/schedule-habits", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
