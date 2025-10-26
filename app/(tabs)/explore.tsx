@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 import Svg, { Defs, Path, Stop, LinearGradient as SvgLinearGradient } from 'react-native-svg';
 
 import ParallaxScrollView from '@/components/parallax-scroll-view';
@@ -15,6 +15,34 @@ export default function TabTwoScreen() {
   const colorScheme = useColorScheme() ?? 'light';
   const palette = Colors[colorScheme];
   const [progressNote, setProgressNote] = useState('');
+  const [geminiOutput, setGeminiOutput] = useState("");
+
+  async function getGeminiResponse() { // call backend to get response to user input
+    if (progressNote.length == 0) {
+      return;
+    }
+    try {
+      const response = await fetch("http://100.66.218.68:8021/gemini-response", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(progressNote)
+      });
+
+      const data = await response.json();
+
+      if (data.status == 200) {
+        setGeminiOutput(data.data);
+
+        console.log(data.data);
+      } else {
+        console.log("Error occurred on getting Gemini response: ", data.error);
+      }
+    } catch (err) {
+      console.log("Error occurred on getting Gemini response: ", err);
+    }
+  }
 
   return (
     <LinearGradient colors={['#D78FEE', '#4E56C0']} style={styles.gradient}>
@@ -50,6 +78,7 @@ export default function TabTwoScreen() {
         </ThemedView>
         <ThemedText>Talk to Discoverer about new insights, trends, help, and more! ✨</ThemedText>
         <View style={styles.inputWrapper}>
+          <ThemedText>{geminiOutput}</ThemedText>
           <TextInput
             style={[
               styles.progressInput,
@@ -65,6 +94,7 @@ export default function TabTwoScreen() {
             value={progressNote}
             onChangeText={setProgressNote}
           />
+          <Button title="Send" onPress={getGeminiResponse}/>
         </View>
       </ParallaxScrollView>
     </LinearGradient>
